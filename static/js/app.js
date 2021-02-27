@@ -5,7 +5,6 @@ const tableData = data;
 var tbody = d3.select("tbody");
 
 function buildTable(data){
-
     // First, clear out any existing data
     tbody.html("");
 
@@ -23,3 +22,21 @@ function buildTable(data){
         });
     });
 }
+function handleClick() {
+    // grab datetime value from the filter
+    let date = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+    //check to see if a date was entered and filter
+    // data using that date
+    if (date) {
+        //Apply 'filter to table data
+        //only keep rows where values match
+        filteredData = filteredData.filter(row => row.datetime === date);
+        };
+    //rebuild table using filtered data 
+    //no data = orignial table data
+    buildTable(filteredData);
+};
+d3.selectAll("#filter-btn").on("click", handleClick);
+
+buildTable(tableData);
